@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/styled-components": "^4.1.4",
     "antd": "^3.11.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts-ts": "3.1.0"
+    "react-redux": "^6.0.0",
+    "react-scripts-ts": "3.1.0",
+    "redux": "^4.0.1",
+    "styled-components": "^4.1.3"
   },
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts-ts",
@@ -21,6 +25,7 @@
     "@types/react-dom": "^16.0.11",
     "react-app-rewired": "^1.6.2",
     "ts-import-plugin": "^1.5.5",
+    "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.2.2"
   }
 }
