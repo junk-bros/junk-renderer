@@ -1,3 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
+import layout from "./layout";
 
-export default combineReducers({});
+export default combineReducers({ layout });
