@@ -4,11 +4,11 @@ import * as Redux from "redux";
 import { Provider } from "react-redux";
 import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
-import reducer from "./reducers";
+import reducer from "./reducers/index";
 import App from "./containers/AppContainer";
 import registerServiceWorker from "./registerServiceWorker";
 
-const middleware: [Redux.Middleware] = [thunk];
+const middleware: Redux.Middleware[] = [thunk];
 if (process.env.NODE_ENV !== "production") {
   middleware.push(createLogger());
 }

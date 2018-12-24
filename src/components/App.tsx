@@ -2,6 +2,8 @@ import { Icon, Layout, Menu } from "antd";
 import styled, { createGlobalStyle } from "styled-components";
 import React from "react";
 
+import { TABS } from "../constants/index";
+
 const { Header, Sider, Content } = Layout;
 
 const GlobalStyle = createGlobalStyle`
@@ -32,41 +34,57 @@ const LayoutContent = styled(Content)`
   min-height: 280px;
 `;
 
+const CollapsedIcon = styled(Icon)`
+  &:hover {
+    color: #1890ff;
+  }
+
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+`;
+
+const Logo = styled.div`
+  color: #eee;
+  font-size: 20px;
+  text-align: center;
+  height: 64px;
+  line-height: 64px;
+`;
+
 interface AppProps {
   collapsed: boolean;
+  nowTab: number;
   toggleCollapsed: () => void;
+  changeTab: (tabID: number) => void;
 }
 
-const App = ({ collapsed = false, toggleCollapsed }: AppProps) => {
+const App = ({ collapsed, nowTab, toggleCollapsed, changeTab }: AppProps) => {
   return (
     <LayoutHeight>
       <GlobalStyle />
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo">JUNK BROS</div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1">
-            <Icon type="home" />
-            <span>用户首页</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Icon type="file-word" />
-            <span>数据概览</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="upload" />
-            <span>nav 3</span>
-          </Menu.Item>
+        <Logo>{collapsed ? "J B" : "Junk Bros"}</Logo>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
+          {TABS.map(item => (
+            <Menu.Item key={item.index} onClick={() => changeTab(item.index)}>
+              <Icon type={item.tabIcon} />
+              <span>{item.tabName}</span>
+            </Menu.Item>
+          ))}
         </Menu>
       </Sider>
       <Layout>
         <LayoutHeader>
-          <Icon
+          <CollapsedIcon
             className="trigger"
             type={collapsed ? "menu-unfold" : "menu-fold"}
             onClick={toggleCollapsed}
           />
         </LayoutHeader>
-        <LayoutContent>Content</LayoutContent>
+        <LayoutContent>{nowTab}</LayoutContent>
       </Layout>
     </LayoutHeight>
   );

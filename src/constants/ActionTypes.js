@@ -1,1 +1,0 @@
-export const TOGGLE_COLLAPESD = 'TOGGLE_COLLAPESD';

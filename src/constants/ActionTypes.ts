@@ -1,0 +1,2 @@
+export const TOGGLE_COLLAPESD = "TOGGLE_COLLAPESD";
+export const CHANGE_TAB = "CHANGE_TAB";
