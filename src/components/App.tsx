@@ -52,6 +52,7 @@ const Logo = styled.div`
   text-align: center;
   height: 64px;
   line-height: 64px;
+  cursor: pointer;
 `;
 
 interface AppProps {

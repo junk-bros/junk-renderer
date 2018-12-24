@@ -15,4 +15,9 @@ export const TABS: Tabs[] = [
     tabIcon: "file-word",
     index: 1
   },
+  {
+    tabName: "数据可视化",
+    tabIcon: "pie-chart",
+    index: 2
+  },
 ];
