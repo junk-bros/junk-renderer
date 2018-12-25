@@ -1,22 +1,10 @@
 import { Icon, Layout, Menu } from "antd";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import React from "react";
-
+import Login from "../components/Login";
 import { TABS } from "../constants/index";
 
 const { Header, Sider, Content } = Layout;
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-  }
-
-  #root {
-    height: 100%;
-  }
-`;
 
 const LayoutHeight = styled(Layout)`
   height: 100%;
@@ -58,37 +46,49 @@ const Logo = styled.div`
 interface AppProps {
   collapsed: boolean;
   nowTab: number;
+  user: User;
   toggleCollapsed: () => void;
   changeTab: (tabID: number) => void;
+  setUser: (user: User) => void;
 }
 
-const App = ({ collapsed, nowTab, toggleCollapsed, changeTab }: AppProps) => {
-  return (
-    <LayoutHeight>
-      <GlobalStyle />
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <Logo>{collapsed ? "J B" : "Junk Bros"}</Logo>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
-          {TABS.map(item => (
-            <Menu.Item key={item.index} onClick={() => changeTab(item.index)}>
-              <Icon type={item.tabIcon} />
-              <span>{item.tabName}</span>
-            </Menu.Item>
-          ))}
-        </Menu>
-      </Sider>
-      <Layout>
-        <LayoutHeader>
-          <CollapsedIcon
-            className="trigger"
-            type={collapsed ? "menu-unfold" : "menu-fold"}
-            onClick={toggleCollapsed}
-          />
-        </LayoutHeader>
-        <LayoutContent>{nowTab}</LayoutContent>
-      </Layout>
-    </LayoutHeight>
-  );
-};
+class App extends React.Component<AppProps, object> {
+  componentDidMount() {
+    const { setUser } = this.props;
+    const user: User = JSON.parse(localStorage.getItem("user") as string);
+    setUser(user);
+  }
+
+  render() {
+    const { collapsed, nowTab, toggleCollapsed, changeTab, user } = this.props;
+    return user && user.id ? (
+      <LayoutHeight>
+        <Sider trigger={null} collapsible collapsed={collapsed}>
+          <Logo>{collapsed ? "J B" : "Junk Bros"}</Logo>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
+            {TABS.map(item => (
+              <Menu.Item key={item.index} onClick={() => changeTab(item.index)}>
+                <Icon type={item.tabIcon} />
+                <span>{item.tabName}</span>
+              </Menu.Item>
+            ))}
+          </Menu>
+        </Sider>
+        <Layout>
+          <LayoutHeader>
+            <CollapsedIcon
+              className="trigger"
+              type={collapsed ? "menu-unfold" : "menu-fold"}
+              onClick={toggleCollapsed}
+            />
+          </LayoutHeader>
+          <LayoutContent>{nowTab}</LayoutContent>
+        </Layout>
+      </LayoutHeight>
+    ) : (
+      <Login />
+    );
+  }
+}
 
 export default App;

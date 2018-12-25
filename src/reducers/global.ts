@@ -9,6 +9,9 @@ const global = (state = defaultState, action: any) => {
       return Object.assign({}, state, { collapsed: !state.collapsed });
     case "CHANGE_TAB":
       return Object.assign({}, state, { nowTab: action.tabID });
+    case "SET_USER":
+      localStorage.setItem("user", JSON.stringify(action.user));
+      return Object.assign({}, state, { user: action.user });
     default:
       return state;
   }
