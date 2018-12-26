@@ -17,12 +17,17 @@ const FormButton: any = styled(Button)`
   width: 100%;
 `;
 
-class NormalLoginForm extends React.Component<any, any> {
+interface LoginProps {
+  doLogin: (data: LoginData) => void;
+  form: any;
+}
+
+class NormalLoginForm extends React.Component<LoginProps, any> {
   handleSubmit = (e: any): void => {
     e.preventDefault();
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        this.props.doLogin(values);
       }
     });
   };
@@ -32,7 +37,7 @@ class NormalLoginForm extends React.Component<any, any> {
     return (
       <LoginForm onSubmit={this.handleSubmit}>
         <Form.Item>
-          {getFieldDecorator("userName", {
+          {getFieldDecorator("username", {
             rules: [{ required: true, message: "Please input your username!" }]
           })(
             <Input
@@ -43,7 +48,7 @@ class NormalLoginForm extends React.Component<any, any> {
         </Form.Item>
         <Form.Item>
           {getFieldDecorator("password", {
-            rules: [{ required: true, message: "Please input your Password!" }]
+            rules: [{ required: true, message: "Please input your password!" }]
           })(
             <Input
               prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}

@@ -1,7 +1,7 @@
 import { Icon, Layout, Menu } from "antd";
 import styled from "styled-components";
 import React from "react";
-import Login from "../components/Login";
+import Login from "../containers/LoginContainer";
 import { TABS } from "../constants/index";
 
 const { Header, Sider, Content } = Layout;
@@ -49,16 +49,9 @@ interface AppProps {
   user: User;
   toggleCollapsed: () => void;
   changeTab: (tabID: number) => void;
-  setUser: (user: User) => void;
 }
 
 class App extends React.Component<AppProps, object> {
-  componentDidMount() {
-    const { setUser } = this.props;
-    const user: User = JSON.parse(localStorage.getItem("user") as string);
-    setUser(user);
-  }
-
   render() {
     const { collapsed, nowTab, toggleCollapsed, changeTab, user } = this.props;
     return user && user.id ? (

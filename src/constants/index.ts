@@ -1,9 +1,3 @@
-interface Tabs {
-  tabName: string;
-  tabIcon: string;
-  index: number;
-}
-
 export const TABS: Tabs[] = [
   {
     tabName: "用户首页",
@@ -21,3 +15,6 @@ export const TABS: Tabs[] = [
     index: 2
   },
 ];
+
+export const NODE_SERVER: string = "http://localhost:3001";
+export const PYTHON_SERVER: string = "http://localhost:4000";

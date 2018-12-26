@@ -5,10 +5,11 @@ import { Provider } from "react-redux";
 import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 import reducer from "./reducers/index";
 import App from "./containers/AppContainer";
+import { getUser } from "./actions";
 import Register from "./components/Register";
 import registerServiceWorker from "./registerServiceWorker";
 
@@ -32,6 +33,10 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
   }
 `;
+
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+console.log(user);
+store.dispatch(getUser(user));
 
 ReactDOM.render(
   <Provider store={store}>
