@@ -1,8 +1,9 @@
-import { Icon, Layout, Menu } from "antd";
+import { Icon, Layout, Menu, message } from "antd";
 import styled from "styled-components";
 import React from "react";
 import Login from "../containers/LoginContainer";
 import { TABS } from "../constants/index";
+import UserDropDown from "../containers/UserDropDownContainer";
 
 const { Header, Sider, Content } = Layout;
 
@@ -74,6 +75,7 @@ class App extends React.Component<AppProps, object> {
               type={collapsed ? "menu-unfold" : "menu-fold"}
               onClick={toggleCollapsed}
             />
+            <UserDropDown />
           </LayoutHeader>
           <LayoutContent>{nowTab}</LayoutContent>
         </Layout>

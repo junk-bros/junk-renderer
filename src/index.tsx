@@ -10,7 +10,7 @@ import { createGlobalStyle } from "styled-components";
 import reducer from "./reducers/index";
 import App from "./containers/AppContainer";
 import { getUser } from "./actions";
-import Register from "./components/Register";
+import Register from "./containers/RegisterContainer";
 import registerServiceWorker from "./registerServiceWorker";
 
 const middleware: Redux.Middleware[] = [thunk];
@@ -35,7 +35,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const user = JSON.parse(localStorage.getItem("user") || "{}");
-console.log(user);
 store.dispatch(getUser(user));
 
 ReactDOM.render(

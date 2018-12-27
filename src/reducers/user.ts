@@ -5,7 +5,6 @@ const initialState = {
 };
 
 const user = (state = initialState, action: any) => {
-  let resState;
   switch (action.type) {
     case "GET_USER":
       return Object.assign({}, state, { info: action.user });
@@ -14,13 +13,16 @@ const user = (state = initialState, action: any) => {
         isFetching: true
       });
     case "FETCH_SUCCESS":
-      const res = action.response;
-      resState = res.status ? { info: res.user } : { error: res.message };
-      return Object.assign({}, initialState, resState);
+      return initialState;
     case "FETCH_FAILURE":
       return Object.assign({}, initialState, {
         error: action.error
       });
+    case "LOGIN_SUCCESS":
+      const user = action.user;
+      return Object.assign({}, initialState, { info: user });
+    case "LOGOUT":
+      return initialState;
     default:
       return state;
   }

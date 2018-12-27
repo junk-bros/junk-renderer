@@ -17,7 +17,9 @@ declare interface LoginData {
   password: string;
 }
 
-declare interface FetchResponse {
-  status: number;
-  message: string;
+declare interface RegData {
+  username: string;
+  password: string;
+  phone: string;
+  email: string;
 }

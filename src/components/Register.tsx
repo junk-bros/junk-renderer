@@ -17,7 +17,12 @@ const FormButton: any = styled(Button)`
   width: 100%;
 `;
 
-class RegistrationForm extends React.Component<any, any> {
+interface RegProps {
+  doReg: (data: RegData) => void;
+  form: any;
+}
+
+class RegistrationForm extends React.Component<RegProps, any> {
   state = {
     confirmDirty: false,
     autoCompleteResult: []
@@ -27,7 +32,7 @@ class RegistrationForm extends React.Component<any, any> {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        this.props.doReg(values);
       }
     });
   };
