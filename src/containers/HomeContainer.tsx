@@ -1,10 +1,12 @@
 import { connect } from "react-redux";
 import Home from "../components/Home";
-import { changeSelectedFile, doFetchFiles } from "../actions";
+import { changeSelectedFile } from "../actions";
 
 const mapStateToProps = (state: any) => ({
   userId: state.user.info.id,
   files: state.file.files,
+  isFetchingFile: state.file.isFetching,
+  selectedFile: state.file.selectedFile
   // files: [
   //   {
   //     key: "sd1dg912gwd91b2wge912gdg19dt21",
@@ -44,15 +46,11 @@ const mapStateToProps = (state: any) => ({
   //     lastModified: "2019-01-06 18:59"
   //   },
   // ],
-  selectedFile: state.file.selectedFile
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   handleChangeSelectedFile: (versionId: string) => {
     dispatch(changeSelectedFile(versionId));
-  },
-  fetchFiles: (userId: string) => {
-    dispatch(doFetchFiles(userId));
   }
 });
 

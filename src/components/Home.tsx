@@ -1,39 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Table, Select } from "antd";
+import { Button, Table, Select, Spin, Icon } from "antd";
 
 import UploadFile from "./UploadFile";
-
-const columns = [
-  {
-    title: "文件名",
-    dataIndex: "filename"
-  },
-  {
-    title: "大小",
-    dataIndex: "size",
-    width: "10%"
-  },
-  {
-    title: "上次更新时间",
-    dataIndex: "lastModified",
-    width: "25%"
-  },
-  {
-    title: "版本ID",
-    dataIndex: "versionId",
-    width: "30%"
-  },
-];
+import { FILE_COLUMNS } from "../constants";
 
 const Option = Select.Option;
 
 interface HomeProps {
-  userId: string;
   files: JunkFile[];
   selectedFile: string;
+  isFetchingFile: boolean;
   handleChangeSelectedFile: (versionId: string) => void;
-  fetchFiles: (userId: string) => void;
 }
 
 const Buttons = styled.div`
@@ -97,21 +75,26 @@ class Home extends React.Component<HomeProps, object> {
     this.setState({ selectedRowKeys });
   };
 
-  componentDidMount() {
-    this.props.fetchFiles(this.props.userId);
-  }
-
   render() {
-    const { files, selectedFile, handleChangeSelectedFile } = this.props;
+    const {
+      files,
+      selectedFile,
+      isFetchingFile,
+      handleChangeSelectedFile
+    } = this.props;
     const { downloadLoading, deleteLoading, selectedRowKeys } = this.state;
     const rowSelection: any = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
     const hasSelected = selectedRowKeys.length > 0;
+    const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
     return files.length > 0 ? (
       <div>
+        {isFetchingFile ? (
+          <Spin indicator={antIcon} tip="正在获取文件列表..." />
+        ) : null}
         <Buttons>
           <div>
             <DownloadButton
@@ -135,7 +118,7 @@ class Home extends React.Component<HomeProps, object> {
         </Buttons>
         <TableWithoutPagination
           rowSelection={rowSelection}
-          columns={columns}
+          columns={FILE_COLUMNS}
           dataSource={files}
         />
         <Hint>

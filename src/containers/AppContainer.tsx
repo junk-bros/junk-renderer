@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import App from "../components/App";
-import { toggleCollapsed, changeTab } from "../actions";
+import { toggleCollapsed, changeTab, doFetchFiles } from "../actions";
 
 const mapStateToProps = (state: any) => ({
   collapsed: state.global.collapsed,
@@ -10,7 +10,10 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   toggleCollapsed: () => dispatch(toggleCollapsed()),
-  changeTab: (tabID: number) => dispatch(changeTab(tabID))
+  changeTab: (tabID: number) => dispatch(changeTab(tabID)),
+  fetchFiles: (userId: string) => {
+    dispatch(doFetchFiles(userId));
+  }
 });
 
 export default connect(

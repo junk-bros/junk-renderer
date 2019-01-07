@@ -16,5 +16,27 @@ export const TABS: Tabs[] = [
   },
 ];
 
+export const FILE_COLUMNS = [
+  {
+    title: "文件名",
+    dataIndex: "filename"
+  },
+  {
+    title: "大小",
+    dataIndex: "size",
+    width: "10%"
+  },
+  {
+    title: "上次更新时间",
+    dataIndex: "lastModified",
+    width: "25%"
+  },
+  {
+    title: "版本ID",
+    dataIndex: "versionId",
+    width: "30%"
+  },
+];
+
 export const NODE_SERVER: string = "http://localhost:3001";
 export const PYTHON_SERVER: string = "http://localhost:4000";

@@ -53,9 +53,17 @@ interface AppProps {
   user: User;
   toggleCollapsed: () => void;
   changeTab: (tabID: number) => void;
+  fetchFiles: (userId: string) => void;
 }
 
 class App extends React.Component<AppProps, object> {
+
+  componentDidMount() {
+    if (this.props.user && this.props.user.id) {
+      this.props.fetchFiles(this.props.user.id);
+    }
+  }
+
   render() {
     const { collapsed, nowTab, toggleCollapsed, changeTab, user } = this.props;
     return user && user.id ? (
