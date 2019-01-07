@@ -1,6 +1,6 @@
 export const TABS: Tabs[] = [
   {
-    tabName: "用户首页",
+    tabName: "用户文件",
     tabIcon: "home",
     index: 0
   },

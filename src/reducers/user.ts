@@ -8,13 +8,13 @@ const user = (state = initialState, action: any) => {
   switch (action.type) {
     case "GET_USER":
       return Object.assign({}, state, { info: action.user });
-    case "FETCH_REQUEST":
+    case "FETCH_USER_REQUEST":
       return Object.assign({}, state, {
         isFetching: true
       });
-    case "FETCH_SUCCESS":
+    case "FETCH_USER_SUCCESS":
       return initialState;
-    case "FETCH_FAILURE":
+    case "FETCH_USER_FAILURE":
       return Object.assign({}, initialState, {
         error: action.error
       });

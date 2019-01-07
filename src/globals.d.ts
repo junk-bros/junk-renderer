@@ -23,3 +23,12 @@ declare interface RegData {
   phone: string;
   email: string;
 }
+
+declare interface JunkFile {
+  key: string;
+  filename: string;
+  size: string;
+  versionId: string;
+  lastModified: string;
+  children?: JunkFile[];
+}

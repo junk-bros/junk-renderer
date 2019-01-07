@@ -1,7 +1,10 @@
 import { Icon, Layout, Menu, message } from "antd";
 import styled from "styled-components";
 import React from "react";
+
 import Login from "../containers/LoginContainer";
+import Home from "../containers/HomeContainer";
+import Overview from "../components/Overview";
 import { TABS } from "../constants/index";
 import UserDropDown from "../containers/UserDropDownContainer";
 
@@ -77,12 +80,26 @@ class App extends React.Component<AppProps, object> {
             />
             <UserDropDown />
           </LayoutHeader>
-          <LayoutContent>{nowTab}</LayoutContent>
+          <LayoutContent>{getTab(nowTab)}</LayoutContent>
         </Layout>
       </LayoutHeight>
     ) : (
       <Login />
     );
+  }
+}
+
+function getTab(nowTab: number) {
+  switch (nowTab) {
+    case 0:
+      return <Home />;
+      break;
+    case 1:
+      return <Overview />;
+      break;
+    default:
+      return <Home />;
+      break;
   }
 }
 

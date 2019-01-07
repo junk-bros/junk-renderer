@@ -1,5 +1,5 @@
 import * as types from "../constants/ActionTypes";
-import { login, register } from "../api/user";
+import { login, register, getFiles } from "../api/user";
 import { message } from "antd";
 
 export const toggleCollapsed = () => ({
@@ -16,17 +16,17 @@ export const getUser = (user: User) => ({
   type: types.GET_USER
 });
 
-const fetchRequest = () => ({
-  type: types.FETCH_REQUEST
+const fetchUserRequest = () => ({
+  type: types.FETCH_USER_REQUEST
 });
 
-const fetchSuccess = () => ({
-  type: types.FETCH_SUCCESS
+const fetchUserSuccess = () => ({
+  type: types.FETCH_USER_SUCCESS
 });
 
-const fetchFailure = (error: string) => ({
+const fetchUserFailure = (error: string) => ({
   error,
-  type: types.FETCH_FAILURE
+  type: types.FETCH_USER_FAILURE
 });
 
 const loginSuccess = (user: User) => ({
@@ -35,41 +35,41 @@ const loginSuccess = (user: User) => ({
 });
 
 export const doLogin = (data: LoginData) => (dispatch: any) => {
-  dispatch(fetchRequest());
+  dispatch(fetchUserRequest());
   return login(data).then(
     res => {
-      dispatch(fetchSuccess());
+      dispatch(fetchUserSuccess());
       if (res.data && res.data.status === 1) {
         dispatch(loginSuccess(res.data.user));
         localStorage.setItem("user", JSON.stringify(res.data.user));
         message.success("登录成功");
       } else {
-        dispatch(fetchFailure(res.data.message));
+        dispatch(fetchUserFailure(res.data.message));
         message.error(res.data.message);
       }
     },
     err => {
       message.error(err.message);
-      dispatch(fetchFailure(err.message));
+      dispatch(fetchUserFailure(err.message));
     },
   );
 };
 
 export const doReg = (data: RegData) => (dispatch: any) => {
-  dispatch(fetchRequest());
+  dispatch(fetchUserRequest());
   return register(data).then(
     res => {
-      dispatch(fetchSuccess());
+      dispatch(fetchUserSuccess());
       if (res.data && res.data.status === 1) {
         message.success("注册成功");
       } else {
-        dispatch(fetchFailure(res.data.message));
+        dispatch(fetchUserFailure(res.data.message));
         message.error(res.data.message);
       }
     },
     err => {
       message.error(err.message);
-      dispatch(fetchFailure(err.message));
+      dispatch(fetchUserFailure(err.message));
     },
   );
 };
@@ -80,4 +80,47 @@ export const doLogout = () => {
   return {
     type: types.LOGOUT
   };
+};
+
+const fetchFileRequest = () => ({
+  type: types.FETCH_FILE_REQUEST
+});
+
+const fetchFileSuccess = () => ({
+  type: types.FETCH_FILE_SUCCESS
+});
+
+const fetchFileFailure = (error: string) => ({
+  error,
+  type: types.FETCH_FILE_FAILURE
+});
+
+const updateFiles = (files: File[]) => ({
+  data: files,
+  type: types.UPDATE_FILES
+});
+
+export const changeSelectedFile = (versionId: string) => ({
+  versionId,
+  type: types.CHANGE_SELECTED_FILE
+});
+
+export const doFetchFiles = (userId: string) => (dispatch: any) => {
+  dispatch(fetchFileRequest());
+  return getFiles(userId).then(
+    res => {
+      dispatch(fetchFileSuccess());
+      if (res.data && res.data.status === 1) {
+        dispatch(updateFiles(res.data["data"]));
+        message.success("成功获取文件列表");
+      } else {
+        dispatch(fetchFileFailure(res.data.message));
+        message.error(res.data.message);
+      }
+    },
+    err => {
+      message.error(err.message);
+      dispatch(fetchFileFailure(err.message));
+    },
+  );
 };
