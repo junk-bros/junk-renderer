@@ -26,7 +26,7 @@ const getUploadProps = (
   headers: {
     authorization: "authorization-text"
   },
-  action: `${PYTHON_SERVER}/file/upload?userId=${userId}`,
+  action: `${PYTHON_SERVER}/file/upload/?userId=${userId}`,
   onChange: (info: any) => {
     if (info.file.status !== "uploading") {
       console.log(info.file, info.fileList);
