@@ -3,6 +3,7 @@ import Home from "../components/Home";
 import { changeSelectedFile, doFetchFiles } from "../actions";
 
 const mapStateToProps = (state: any) => ({
+  userId: state.user.info.id,
   files: state.file.files,
   // files: [
   //   {

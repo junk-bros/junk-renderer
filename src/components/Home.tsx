@@ -29,9 +29,11 @@ const columns = [
 const Option = Select.Option;
 
 interface HomeProps {
+  userId: string;
   files: JunkFile[];
   selectedFile: string;
   handleChangeSelectedFile: (versionId: string) => void;
+  fetchFiles: (userId: string) => void;
 }
 
 const Buttons = styled.div`
@@ -94,6 +96,10 @@ class Home extends React.Component<HomeProps, object> {
   onSelectChange = (selectedRowKeys: [string]) => {
     this.setState({ selectedRowKeys });
   };
+
+  componentDidMount() {
+    this.props.fetchFiles(this.props.userId);
+  }
 
   render() {
     const { files, selectedFile, handleChangeSelectedFile } = this.props;
