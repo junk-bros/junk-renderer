@@ -1,5 +1,5 @@
 const initialState = {
-  files: null,
+  files: [],
   selectedFile: "",
   isFetching: false,
   error: ""

@@ -1,5 +1,6 @@
 import * as types from "../constants/ActionTypes";
-import { login, register, getFiles } from "../api/user";
+import { login, register } from "../api/user";
+import { getFiles } from "../api/file";
 import { message } from "antd";
 
 export const toggleCollapsed = () => ({
