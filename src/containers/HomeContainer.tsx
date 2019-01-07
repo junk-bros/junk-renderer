@@ -5,7 +5,6 @@ import { changeSelectedFile } from "../actions";
 const mapStateToProps = (state: any) => ({
   userId: state.user.info.id,
   files: state.file.files,
-  isFetchingFile: state.file.isFetching,
   selectedFile: state.file.selectedFile
   // files: [
   //   {

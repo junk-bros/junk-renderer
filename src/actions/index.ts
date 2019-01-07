@@ -108,18 +108,25 @@ export const changeSelectedFile = (versionId: string) => ({
 
 export const doFetchFiles = (userId: string) => (dispatch: any) => {
   dispatch(fetchFileRequest());
+  const hideLoading = message.loading("正在获取文件列表..", 0);
   return getFiles(userId).then(
     res => {
+      hideLoading();
       dispatch(fetchFileSuccess());
       if (res.data && res.data.status === 1) {
-        dispatch(updateFiles(res.data["data"]));
-        message.success("成功获取文件列表");
+        if (res.data["data"].length > 0) {
+          dispatch(updateFiles(res.data["data"]));
+          message.success("成功获取文件列表", 2);
+        } else {
+          message.info("你还没有上传任何文件，请先上传文件。", 2);
+        }
       } else {
         dispatch(fetchFileFailure(res.data.message));
-        message.error(res.data.message);
+        message.error(res.data.message, 2);
       }
     },
     err => {
+      hideLoading();
       message.error(err.message);
       dispatch(fetchFileFailure(err.message));
     },

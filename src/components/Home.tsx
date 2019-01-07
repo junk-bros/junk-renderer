@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Table, Select, Spin, Icon } from "antd";
+import { Button, Table, Select } from "antd";
 
 import UploadFile from "./UploadFile";
 import { FILE_COLUMNS } from "../constants";
@@ -10,7 +10,6 @@ const Option = Select.Option;
 interface HomeProps {
   files: JunkFile[];
   selectedFile: string;
-  isFetchingFile: boolean;
   handleChangeSelectedFile: (versionId: string) => void;
 }
 
@@ -76,25 +75,16 @@ class Home extends React.Component<HomeProps, object> {
   };
 
   render() {
-    const {
-      files,
-      selectedFile,
-      isFetchingFile,
-      handleChangeSelectedFile
-    } = this.props;
+    const { files, selectedFile, handleChangeSelectedFile } = this.props;
     const { downloadLoading, deleteLoading, selectedRowKeys } = this.state;
     const rowSelection: any = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
     const hasSelected = selectedRowKeys.length > 0;
-    const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
     return files.length > 0 ? (
       <div>
-        {isFetchingFile ? (
-          <Spin indicator={antIcon} tip="正在获取文件列表..." />
-        ) : null}
         <Buttons>
           <div>
             <DownloadButton
