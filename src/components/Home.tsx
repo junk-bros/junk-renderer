@@ -8,9 +8,11 @@ import { FILE_COLUMNS } from "../constants";
 const Option = Select.Option;
 
 interface HomeProps {
+  userId: string;
   files: JunkFile[];
   selectedFile: string;
   handleChangeSelectedFile: (versionId: string) => void;
+  updateFiles: (files: JunkFile[]) => void;
 }
 
 const Buttons = styled.div`
@@ -75,7 +77,13 @@ class Home extends React.Component<HomeProps, object> {
   };
 
   render() {
-    const { files, selectedFile, handleChangeSelectedFile } = this.props;
+    const {
+      files,
+      selectedFile,
+      userId,
+      handleChangeSelectedFile,
+      updateFiles
+    } = this.props;
     const { downloadLoading, deleteLoading, selectedRowKeys } = this.state;
     const rowSelection: any = {
       selectedRowKeys,
@@ -104,7 +112,7 @@ class Home extends React.Component<HomeProps, object> {
               删除
             </Button>
           </div>
-          <UploadFile files={files} />
+          <UploadFile files={files} userId={userId} updateFiles={updateFiles} />
         </Buttons>
         <TableWithoutPagination
           rowSelection={rowSelection}
@@ -132,7 +140,7 @@ class Home extends React.Component<HomeProps, object> {
       </div>
     ) : (
       <div>
-        <UploadFile files={files} />
+        <UploadFile files={files} userId={userId} updateFiles={updateFiles} />
         <Hint>* 您还没有上传任何文件，请先上传数据文件。</Hint>
       </div>
     );

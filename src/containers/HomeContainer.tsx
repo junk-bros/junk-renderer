@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Home from "../components/Home";
-import { changeSelectedFile } from "../actions";
+import { changeSelectedFile, updateFiles } from "../actions";
 
 const mapStateToProps = (state: any) => ({
   userId: state.user.info.id,
@@ -50,6 +50,9 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   handleChangeSelectedFile: (versionId: string) => {
     dispatch(changeSelectedFile(versionId));
+  },
+  updateFiles: (files: JunkFile[]) => {
+    dispatch(updateFiles(files));
   }
 });
 

@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Upload, message, Button, Icon } from "antd";
+import { PYTHON_SERVER } from "../constants";
 
 const Dragger = Upload.Dragger;
 
 interface UploadProps {
   files: JunkFile[];
+  userId: string;
+  updateFiles: (files: JunkFile[]) => void;
 }
 
 const Hint = styled.span`
@@ -14,26 +17,43 @@ const Hint = styled.span`
   margin-left: 15px;
 `;
 
-const uploadProps = {
+const getUploadProps = (
+  userId: string,
+  updateFiles: (files: JunkFile[]) => void,
+) => ({
   name: "file",
-  action: "//jsonplaceholder.typicode.com/posts/",
+  accept: ".csv, .xlsx",
   headers: {
     authorization: "authorization-text"
   },
-  onChange(info: any) {
+  action: `${PYTHON_SERVER}/file/upload?userId=${userId}`,
+  onChange: (info: any) => {
     if (info.file.status !== "uploading") {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
+      console.log(info.file.response);
+      if (info.file.response.status) {
+        updateFiles(info.file.response.data);
+      }
+      message.success(`${info.file.name} 上传成功`);
     } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
+      message.error(`${info.file.name} 上传失败`);
     }
+  },
+  beforeUpload: (file: any, fileList: any) => {
+    if (file.size > 5000000) {
+      message.error("文件大小超出限制，最大为5MB");
+      fileList.length = 0;
+      return false;
+    }
+    return true;
   }
-};
+});
 
 const UploadFile = (props: UploadProps) => {
-  const { files } = props;
+  const { files, userId, updateFiles } = props;
+  const uploadProps = getUploadProps(userId, updateFiles);
   return files.length > 0 ? (
     <Upload {...uploadProps}>
       <Button>

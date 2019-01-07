@@ -96,7 +96,7 @@ const fetchFileFailure = (error: string) => ({
   type: types.FETCH_FILE_FAILURE
 });
 
-const updateFiles = (files: File[]) => ({
+export const updateFiles = (files: JunkFile[]) => ({
   data: files,
   type: types.UPDATE_FILES
 });
