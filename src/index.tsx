@@ -8,7 +8,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
 import reducer from "./reducers/index";
-import App from "./containers/AppContainer";
+import Main from "./containers/MainContainer";
 import { getUser } from "./actions";
 import Register from "./containers/RegisterContainer";
 import registerServiceWorker from "./registerServiceWorker";
@@ -42,7 +42,7 @@ ReactDOM.render(
     <GlobalStyle />
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={Main} />
         <Route exact path="/register" component={Register} />
       </Switch>
     </BrowserRouter>

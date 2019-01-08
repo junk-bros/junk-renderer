@@ -2,7 +2,6 @@ import { Icon, Layout, Menu, message } from "antd";
 import styled from "styled-components";
 import React from "react";
 
-import Login from "../containers/LoginContainer";
 import Home from "../containers/HomeContainer";
 import Overview from "../components/Overview";
 import { TABS } from "../constants/index";
@@ -57,7 +56,6 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps, object> {
-
   componentDidMount() {
     if (this.props.user && this.props.user.id) {
       this.props.fetchFiles(this.props.user.id);
@@ -65,8 +63,8 @@ class App extends React.Component<AppProps, object> {
   }
 
   render() {
-    const { collapsed, nowTab, toggleCollapsed, changeTab, user } = this.props;
-    return user && user.id ? (
+    const { collapsed, nowTab, toggleCollapsed, changeTab } = this.props;
+    return (
       <LayoutHeight>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <Logo>{collapsed ? "J B" : "Junk Bros"}</Logo>
@@ -91,8 +89,6 @@ class App extends React.Component<AppProps, object> {
           <LayoutContent>{getTab(nowTab)}</LayoutContent>
         </Layout>
       </LayoutHeight>
-    ) : (
-      <Login />
     );
   }
 }

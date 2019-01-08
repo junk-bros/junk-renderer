@@ -8,3 +8,7 @@ export const getFiles = (userId: string) => {
 export const downloadFiles = (data: FilesRequest) => {
   return axios.post(`${PYTHON_SERVER}/file/download`, data);
 };
+
+export const deleteFiles = (data: FilesRequest) => {
+  return axios.post(`${PYTHON_SERVER}/file/delete`, data);
+};

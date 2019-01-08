@@ -129,8 +129,7 @@ class Home extends React.Component<HomeProps, object> {
         <ChooseFile>
           <label htmlFor="chooseFile">选择用于分析的文件：</label>
           <Select
-            value="sd1dg912gwd91b2wge912gdg19dt24"
-            defaultValue="sd1dg912gwd91b2wge912gdg19dt24"
+            defaultValue={selectedFile}
             id="chooseFile"
             onChange={handleChangeSelectedFile}
           >

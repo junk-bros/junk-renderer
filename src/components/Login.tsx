@@ -6,7 +6,7 @@ import styled from "styled-components";
 const LoginForm: any = styled(Form)`
   max-width: 300px;
   flex: 1;
-  margin-top: 150px;
+  margin-top: 150px !important;
 
   .ant-form-item {
     margin-bottom: 16px;

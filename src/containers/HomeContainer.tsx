@@ -11,6 +11,7 @@ const mapStateToProps = (state: any) => ({
   files: state.file.files,
   selectedFile: state.file.selectedFile,
   deleteLoading: state.file.deleteLoading,
+  downloadLoading: state.file.downloadLoading,
   selectedRowKeys: state.file.selectedRowKeys
 });
 
