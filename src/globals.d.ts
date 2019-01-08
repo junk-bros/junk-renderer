@@ -32,3 +32,8 @@ declare interface JunkFile {
   lastModified: string;
   children?: JunkFile[];
 }
+
+declare interface FilesRequest {
+  userId: string;
+  files: string[];
+}

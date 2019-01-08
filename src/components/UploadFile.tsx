@@ -34,9 +34,11 @@ const getUploadProps = (
     if (info.file.status === "done") {
       console.log(info.file.response);
       if (info.file.response.status) {
+        message.success(`${info.file.name} 上传成功`);
         updateFiles(info.file.response.data);
+      } else {
+        message.error(info.file.response.message);
       }
-      message.success(`${info.file.name} 上传成功`);
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }

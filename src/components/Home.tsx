@@ -11,8 +11,11 @@ interface HomeProps {
   userId: string;
   files: JunkFile[];
   selectedFile: string;
+  deleteLoading: boolean;
+  selectedRowKeys: string[];
   handleChangeSelectedFile: (versionId: string) => void;
   updateFiles: (files: JunkFile[]) => void;
+  updateSelectedRowKeys: (selectedRowKeys: [string]) => void;
 }
 
 const Buttons = styled.div`
@@ -45,9 +48,7 @@ const ChooseFile = styled.div`
 
 class Home extends React.Component<HomeProps, object> {
   state = {
-    selectedRowKeys: [], // Check here to configure the default column
-    downloadLoading: false,
-    deleteLoading: false
+    downloadLoading: false
   };
 
   download = () => {
@@ -73,7 +74,7 @@ class Home extends React.Component<HomeProps, object> {
   };
 
   onSelectChange = (selectedRowKeys: [string]) => {
-    this.setState({ selectedRowKeys });
+    this.props.updateSelectedRowKeys(selectedRowKeys);
   };
 
   render() {
@@ -82,9 +83,11 @@ class Home extends React.Component<HomeProps, object> {
       selectedFile,
       userId,
       handleChangeSelectedFile,
-      updateFiles
+      updateFiles,
+      deleteLoading,
+      selectedRowKeys
     } = this.props;
-    const { downloadLoading, deleteLoading, selectedRowKeys } = this.state;
+    const { downloadLoading } = this.state;
     const rowSelection: any = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -126,7 +129,8 @@ class Home extends React.Component<HomeProps, object> {
         <ChooseFile>
           <label htmlFor="chooseFile">选择用于分析的文件：</label>
           <Select
-            defaultValue={selectedFile}
+            value="sd1dg912gwd91b2wge912gdg19dt24"
+            defaultValue="sd1dg912gwd91b2wge912gdg19dt24"
             id="chooseFile"
             onChange={handleChangeSelectedFile}
           >

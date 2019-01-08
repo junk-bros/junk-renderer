@@ -106,6 +106,11 @@ export const changeSelectedFile = (versionId: string) => ({
   type: types.CHANGE_SELECTED_FILE
 });
 
+export const updateSelectedRowKeys = (selectedRowKeys: [string]) => ({
+  selectedRowKeys,
+  type: types.UPDATE_SELECTED_ROW_KEYS
+});
+
 export const doFetchFiles = (userId: string) => (dispatch: any) => {
   dispatch(fetchFileRequest());
   const hideLoading = message.loading("正在获取文件列表..", 0);
@@ -113,7 +118,7 @@ export const doFetchFiles = (userId: string) => (dispatch: any) => {
     res => {
       hideLoading();
       dispatch(fetchFileSuccess());
-      if (res.data && res.data.status === 1) {
+      if (res.data && res.data.status === 1 && res.data["data"]) {
         if (res.data["data"].length > 0) {
           dispatch(updateFiles(res.data["data"]));
           message.success("成功获取文件列表", 2);
