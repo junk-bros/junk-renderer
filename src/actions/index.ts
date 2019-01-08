@@ -121,13 +121,14 @@ export const doFetchFiles = (userId: string) => (dispatch: any) => {
       if (res.data && res.data.status === 1 && res.data["data"]) {
         if (res.data["data"].length > 0) {
           dispatch(updateFiles(res.data["data"]));
-          message.success("成功获取文件列表", 2);
+          message.success("成功获取文件列表");
         } else {
-          message.info("你还没有上传任何文件，请先上传文件。", 2);
+          dispatch(updateFiles(res.data["data"]));
+          message.info("你还没有上传任何文件，请先上传文件。");
         }
       } else {
         dispatch(fetchFileFailure(res.data.message));
-        message.error(res.data.message, 2);
+        message.error(res.data.message);
       }
     },
     err => {
