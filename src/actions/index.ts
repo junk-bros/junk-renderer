@@ -2,7 +2,7 @@ import { message } from "antd";
 
 import * as types from "../constants/ActionTypes";
 import { login, register } from "../api/user";
-import { getFiles, deleteFiles } from "../api/file";
+import { getFiles, deleteFiles, downloadFiles } from "../api/file";
 import { dealDataToFileRequest } from "../util";
 
 export const toggleCollapsed = () => ({
@@ -158,7 +158,7 @@ export const doDownloadFiles = (userId: string, selectedRowKeys: string[]) => (
 ) => {
   dispatch(fetchRequest());
   dispatch(changeDownloadLoading(true));
-  return deleteFiles(dealDataToFileRequest(selectedRowKeys, userId)).then(
+  return downloadFiles(dealDataToFileRequest(selectedRowKeys, userId)).then(
     res => {
       dispatch(fetchSuccess());
       dispatch(changeDownloadLoading(false));
