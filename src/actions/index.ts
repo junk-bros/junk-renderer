@@ -162,11 +162,11 @@ export const doDownloadFiles = (userId: string, selectedRowKeys: string[]) => (
     res => {
       dispatch(fetchSuccess());
       dispatch(changeDownloadLoading(false));
-      if (res.data && res.data.status === 1) {
-        message.success("下载成功");
-      } else {
+      if (res.data && res.data.status === 0) {
         dispatch(fetchFailure(res.data.message));
         message.error(res.data.message);
+      } else {
+        dispatch(fetchSuccess());
       }
     },
     err => {
