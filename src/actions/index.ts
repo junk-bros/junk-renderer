@@ -1,7 +1,9 @@
+import { message } from "antd";
+
 import * as types from "../constants/ActionTypes";
 import { login, register } from "../api/user";
-import { getFiles } from "../api/file";
-import { message } from "antd";
+import { getFiles, deleteFiles } from "../api/file";
+import { dealDataToFileRequest } from "../util";
 
 export const toggleCollapsed = () => ({
   type: types.TOGGLE_COLLAPESD
@@ -17,17 +19,17 @@ export const getUser = (user: User) => ({
   type: types.GET_USER
 });
 
-const fetchUserRequest = () => ({
-  type: types.FETCH_USER_REQUEST
+const fetchRequest = () => ({
+  type: types.FETCH_REQUEST
 });
 
-const fetchUserSuccess = () => ({
-  type: types.FETCH_USER_SUCCESS
+const fetchSuccess = () => ({
+  type: types.FETCH_SUCCESS
 });
 
-const fetchUserFailure = (error: string) => ({
+const fetchFailure = (error: string) => ({
   error,
-  type: types.FETCH_USER_FAILURE
+  type: types.FETCH_FAILURE
 });
 
 const loginSuccess = (user: User) => ({
@@ -36,41 +38,41 @@ const loginSuccess = (user: User) => ({
 });
 
 export const doLogin = (data: LoginData) => (dispatch: any) => {
-  dispatch(fetchUserRequest());
+  dispatch(fetchRequest());
   return login(data).then(
     res => {
-      dispatch(fetchUserSuccess());
+      dispatch(fetchSuccess());
       if (res.data && res.data.status === 1) {
         dispatch(loginSuccess(res.data.user));
         localStorage.setItem("user", JSON.stringify(res.data.user));
         message.success("登录成功");
       } else {
-        dispatch(fetchUserFailure(res.data.message));
+        dispatch(fetchFailure(res.data.message));
         message.error(res.data.message);
       }
     },
     err => {
       message.error(err.message);
-      dispatch(fetchUserFailure(err.message));
+      dispatch(fetchFailure(err.message));
     },
   );
 };
 
 export const doReg = (data: RegData) => (dispatch: any) => {
-  dispatch(fetchUserRequest());
+  dispatch(fetchRequest());
   return register(data).then(
     res => {
-      dispatch(fetchUserSuccess());
+      dispatch(fetchSuccess());
       if (res.data && res.data.status === 1) {
         message.success("注册成功");
       } else {
-        dispatch(fetchUserFailure(res.data.message));
+        dispatch(fetchFailure(res.data.message));
         message.error(res.data.message);
       }
     },
     err => {
       message.error(err.message);
-      dispatch(fetchUserFailure(err.message));
+      dispatch(fetchFailure(err.message));
     },
   );
 };
@@ -83,19 +85,6 @@ export const doLogout = () => {
   };
 };
 
-const fetchFileRequest = () => ({
-  type: types.FETCH_FILE_REQUEST
-});
-
-const fetchFileSuccess = () => ({
-  type: types.FETCH_FILE_SUCCESS
-});
-
-const fetchFileFailure = (error: string) => ({
-  error,
-  type: types.FETCH_FILE_FAILURE
-});
-
 export const updateFiles = (files: JunkFile[]) => ({
   data: files,
   type: types.UPDATE_FILES
@@ -106,18 +95,18 @@ export const changeSelectedFile = (versionId: string) => ({
   type: types.CHANGE_SELECTED_FILE
 });
 
-export const updateSelectedRowKeys = (selectedRowKeys: [string]) => ({
+export const updateSelectedRowKeys = (selectedRowKeys: string[]) => ({
   selectedRowKeys,
   type: types.UPDATE_SELECTED_ROW_KEYS
 });
 
 export const doFetchFiles = (userId: string) => (dispatch: any) => {
-  dispatch(fetchFileRequest());
+  dispatch(fetchRequest());
   const hideLoading = message.loading("正在获取文件列表..", 0);
   return getFiles(userId).then(
     res => {
       hideLoading();
-      dispatch(fetchFileSuccess());
+      dispatch(fetchSuccess());
       if (res.data && res.data.status === 1 && res.data["data"]) {
         if (res.data["data"].length > 0) {
           dispatch(updateFiles(res.data["data"]));
@@ -127,14 +116,47 @@ export const doFetchFiles = (userId: string) => (dispatch: any) => {
           message.info("你还没有上传任何文件，请先上传文件。");
         }
       } else {
-        dispatch(fetchFileFailure(res.data.message));
+        dispatch(fetchFailure(res.data.message));
         message.error(res.data.message);
       }
     },
     err => {
       hideLoading();
       message.error(err.message);
-      dispatch(fetchFileFailure(err.message));
+      dispatch(fetchFailure(err.message));
     },
   );
 };
+
+export const doDeleteFiles = (userId: string, selectedRowKeys: string[]) => (
+  dispatch: any,
+) => {
+  dispatch(fetchRequest());
+  dispatch(changeDeleteLoading(true));
+  return deleteFiles(dealDataToFileRequest(selectedRowKeys, userId)).then(
+    res => {
+      dispatch(fetchSuccess());
+      dispatch(changeDeleteLoading(false));
+      if (res.data && res.data.status === 1 && res.data["data"]) {
+        message.success("删除成功");
+        dispatch(updateFiles(res.data["data"]));
+      } else {
+        dispatch(fetchFailure(res.data.message));
+        message.error(res.data.message);
+      }
+    },
+    err => {
+      message.error(err.message);
+      dispatch(changeDeleteLoading(false));
+      dispatch(fetchFailure(err.message));
+    },
+  );
+};
+
+const changeDeleteLoading = (isLoading: boolean) => ({
+  type: types.CHANGE_DELETE_LOADING
+});
+
+const changeDownloadLoading = (isLoading: boolean) => ({
+  type: types.CHANGE_DOWNLOAD_LOADING
+});

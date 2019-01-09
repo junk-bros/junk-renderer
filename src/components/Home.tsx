@@ -12,10 +12,12 @@ interface HomeProps {
   files: JunkFile[];
   selectedFile: string;
   deleteLoading: boolean;
+  downloadLoading: boolean;
   selectedRowKeys: string[];
   handleChangeSelectedFile: (versionId: string) => void;
   updateFiles: (files: JunkFile[]) => void;
-  updateSelectedRowKeys: (selectedRowKeys: [string]) => void;
+  updateSelectedRowKeys: (selectedRowKeys: string[]) => void;
+  handleDelete: (userId: string, selectedRowKeys: string[]) => void;
 }
 
 const Buttons = styled.div`
@@ -73,10 +75,6 @@ class Home extends React.Component<HomeProps, object> {
     }, 1000);
   };
 
-  onSelectChange = (selectedRowKeys: [string]) => {
-    this.props.updateSelectedRowKeys(selectedRowKeys);
-  };
-
   render() {
     const {
       files,
@@ -85,12 +83,16 @@ class Home extends React.Component<HomeProps, object> {
       handleChangeSelectedFile,
       updateFiles,
       deleteLoading,
-      selectedRowKeys
+      downloadLoading,
+      selectedRowKeys,
+      updateSelectedRowKeys,
+      handleDelete
     } = this.props;
-    const { downloadLoading } = this.state;
     const rowSelection: any = {
       selectedRowKeys,
-      onChange: this.onSelectChange
+      onChange: (selectedRowKeys: any, selectedRows: any) => {
+        updateSelectedRowKeys(selectedRowKeys);
+      }
     };
     const hasSelected = selectedRowKeys.length > 0;
 
@@ -108,7 +110,7 @@ class Home extends React.Component<HomeProps, object> {
             </DownloadButton>
             <Button
               type="danger"
-              onClick={this.delete}
+              onClick={() => handleDelete(userId, selectedRowKeys)}
               disabled={!hasSelected}
               loading={deleteLoading}
             >

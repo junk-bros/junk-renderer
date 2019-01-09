@@ -1,7 +1,7 @@
 declare interface User {
   id: string;
   username: string;
-  files?: [string];
+  files?: string[];
   phone?: string;
   email?: string;
 }
@@ -35,5 +35,10 @@ declare interface JunkFile {
 
 declare interface FilesRequest {
   userId: string;
-  files: string[];
+  files: FilesRequestItem[];
+}
+
+interface FilesRequestItem {
+  filename: string;
+  versionId: string;
 }

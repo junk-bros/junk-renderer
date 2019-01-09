@@ -3,7 +3,8 @@ import Home from "../components/Home";
 import {
   changeSelectedFile,
   updateFiles,
-  updateSelectedRowKeys
+  updateSelectedRowKeys,
+  doDeleteFiles
 } from "../actions";
 
 const mapStateToProps = (state: any) => ({
@@ -22,8 +23,11 @@ const mapDispatchToProps = (dispatch: any) => ({
   updateFiles: (files: JunkFile[]) => {
     dispatch(updateFiles(files));
   },
-  updateSelectedRowKeys: (selectedRowKeys: [string]) => {
+  updateSelectedRowKeys: (selectedRowKeys: string[]) => {
     dispatch(updateSelectedRowKeys(selectedRowKeys));
+  },
+  handleDelete: (userId: string, selectedRowKeys: string[]) => {
+    dispatch(doDeleteFiles(userId, selectedRowKeys));
   }
 });
 
