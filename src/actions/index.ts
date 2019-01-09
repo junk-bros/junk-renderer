@@ -154,9 +154,11 @@ export const doDeleteFiles = (userId: string, selectedRowKeys: string[]) => (
 };
 
 const changeDeleteLoading = (isLoading: boolean) => ({
+  isLoading,
   type: types.CHANGE_DELETE_LOADING
 });
 
 const changeDownloadLoading = (isLoading: boolean) => ({
+  isLoading,
   type: types.CHANGE_DOWNLOAD_LOADING
 });
