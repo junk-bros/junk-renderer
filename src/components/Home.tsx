@@ -18,6 +18,7 @@ interface HomeProps {
   updateFiles: (files: JunkFile[]) => void;
   updateSelectedRowKeys: (selectedRowKeys: string[]) => void;
   handleDelete: (userId: string, selectedRowKeys: string[]) => void;
+  handleDownload: (userId: string, selectedRowKeys: string[]) => void;
 }
 
 const Buttons = styled.div`
@@ -86,7 +87,8 @@ class Home extends React.Component<HomeProps, object> {
       downloadLoading,
       selectedRowKeys,
       updateSelectedRowKeys,
-      handleDelete
+      handleDelete,
+      handleDownload
     } = this.props;
     const rowSelection: any = {
       selectedRowKeys,
@@ -102,7 +104,7 @@ class Home extends React.Component<HomeProps, object> {
           <div>
             <DownloadButton
               type="default"
-              onClick={this.download}
+              onClick={() => handleDownload(userId, selectedRowKeys)}
               disabled={!hasSelected}
               loading={downloadLoading}
             >

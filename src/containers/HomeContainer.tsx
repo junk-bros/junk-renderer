@@ -4,7 +4,8 @@ import {
   changeSelectedFile,
   updateFiles,
   updateSelectedRowKeys,
-  doDeleteFiles
+  doDeleteFiles,
+  doDownloadFiles
 } from "../actions";
 
 const mapStateToProps = (state: any) => ({
@@ -28,6 +29,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   handleDelete: (userId: string, selectedRowKeys: string[]) => {
     dispatch(doDeleteFiles(userId, selectedRowKeys));
+  },
+  handleDownload: (userId: string, selectedRowKeys: string[]) => {
+    dispatch(doDownloadFiles(userId, selectedRowKeys));
   }
 });
 

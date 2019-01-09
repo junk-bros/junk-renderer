@@ -153,6 +153,30 @@ export const doDeleteFiles = (userId: string, selectedRowKeys: string[]) => (
   );
 };
 
+export const doDownloadFiles = (userId: string, selectedRowKeys: string[]) => (
+  dispatch: any,
+) => {
+  dispatch(fetchRequest());
+  dispatch(changeDownloadLoading(true));
+  return deleteFiles(dealDataToFileRequest(selectedRowKeys, userId)).then(
+    res => {
+      dispatch(fetchSuccess());
+      dispatch(changeDownloadLoading(false));
+      if (res.data && res.data.status === 1) {
+        message.success("下载成功");
+      } else {
+        dispatch(fetchFailure(res.data.message));
+        message.error(res.data.message);
+      }
+    },
+    err => {
+      message.error(err.message);
+      dispatch(changeDownloadLoading(false));
+      dispatch(fetchFailure(err.message));
+    },
+  );
+};
+
 const changeDeleteLoading = (isLoading: boolean) => ({
   isLoading,
   type: types.CHANGE_DELETE_LOADING
