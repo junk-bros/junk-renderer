@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "module": "ESNext",
     "moduleResolution": "node",
-    "rootDir": "src",
+    // "rootDir": "src",
     "allowJs": true,
     "outDir": "build/dist",
     "skipLibCheck": true,

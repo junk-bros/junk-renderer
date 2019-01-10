@@ -3,7 +3,7 @@ import { message } from "antd";
 import * as types from "../constants/ActionTypes";
 import { login, register } from "../api/user";
 import { getFiles, deleteFiles, downloadFiles } from "../api/file";
-import { dealDataToFileRequest } from "../util";
+import { dealDataToDeleteRequest, dealDataToDownloadRequest } from "../util";
 
 export const toggleCollapsed = () => ({
   type: types.TOGGLE_COLLAPESD
@@ -133,7 +133,7 @@ export const doDeleteFiles = (userId: string, selectedRowKeys: string[]) => (
 ) => {
   dispatch(fetchRequest());
   dispatch(changeDeleteLoading(true));
-  return deleteFiles(dealDataToFileRequest(selectedRowKeys, userId)).then(
+  return deleteFiles(dealDataToDeleteRequest(selectedRowKeys, userId)).then(
     res => {
       dispatch(fetchSuccess());
       dispatch(changeDeleteLoading(false));
@@ -158,23 +158,28 @@ export const doDownloadFiles = (userId: string, selectedRowKeys: string[]) => (
 ) => {
   dispatch(fetchRequest());
   dispatch(changeDownloadLoading(true));
-  return downloadFiles(dealDataToFileRequest(selectedRowKeys, userId)).then(
-    res => {
-      dispatch(fetchSuccess());
-      dispatch(changeDownloadLoading(false));
-      if (res.data && res.data.status === 0) {
-        dispatch(fetchFailure(res.data.message));
-        message.error(res.data.message);
-      } else {
-        dispatch(fetchSuccess());
-      }
-    },
-    err => {
-      message.error(err.message);
-      dispatch(changeDownloadLoading(false));
-      dispatch(fetchFailure(err.message));
+  const promises = dealDataToDownloadRequest(selectedRowKeys, userId).map(
+    item => {
+      return downloadFiles(item).then(
+        res => {
+          dispatch(fetchSuccess());
+          if (res.data && res.data.status === 0) {
+            dispatch(fetchFailure(res.data.message));
+            message.error(res.data.message);
+          } else {
+            dispatch(fetchSuccess());
+          }
+        },
+        err => {
+          message.error(err.message);
+          dispatch(fetchFailure(err.message));
+        },
+      );
     },
   );
+  Promise.all(promises).then(res => {
+    dispatch(changeDownloadLoading(false));
+  });
 };
 
 const changeDeleteLoading = (isLoading: boolean) => ({

@@ -33,12 +33,19 @@ declare interface JunkFile {
   children?: JunkFile[];
 }
 
-declare interface FilesRequest {
+declare interface DeleteRequest {
   userId: string;
-  files: FilesRequestItem[];
+  files: DeleteRequestItem[];
 }
 
-interface FilesRequestItem {
+interface DeleteRequestItem {
   filename: string;
   versionId: string;
 }
+
+declare interface DownloadRequest {
+  userId: string;
+  filename: string;
+  versionId: string;
+}
+
