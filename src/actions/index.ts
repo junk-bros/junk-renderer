@@ -170,7 +170,7 @@ export const doDownloadFiles = (userId: string, selectedRowKeys: string[]) => (
           } else {
             dispatch(fetchSuccess());
             const filename = JSON.parse(res.config as string).filename;
-            fileDownload(res.data, filename);
+            fileDownload(res.data, filename || "data.csv");
           }
         },
         err => {
