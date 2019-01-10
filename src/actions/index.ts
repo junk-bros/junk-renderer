@@ -1,4 +1,5 @@
 import { message } from "antd";
+import fileDownload from "js-file-download";
 
 import * as types from "../constants/ActionTypes";
 import { login, register } from "../api/user";
@@ -168,6 +169,7 @@ export const doDownloadFiles = (userId: string, selectedRowKeys: string[]) => (
             message.error(res.data.message);
           } else {
             dispatch(fetchSuccess());
+            fileDownload(res.data, "test.csv");
           }
         },
         err => {

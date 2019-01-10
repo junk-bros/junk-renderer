@@ -9,6 +9,7 @@
     "@types/styled-components": "^4.1.4",
     "antd": "^3.11.2",
     "axios": "^0.18.0",
+    "js-file-download": "^0.4.4",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",

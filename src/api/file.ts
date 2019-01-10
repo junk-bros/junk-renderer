@@ -6,7 +6,12 @@ export const getFiles = (userId: string) => {
 };
 
 export const downloadFiles = (data: DownloadRequest) => {
-  return axios.post(`${PYTHON_SERVER}/file/download/`, data);
+  return axios({
+    data,
+    method: "POST",
+    url: `${PYTHON_SERVER}/file/download/`,
+    responseType: "blob"
+  });
 };
 
 export const deleteFiles = (data: DeleteRequest) => {
