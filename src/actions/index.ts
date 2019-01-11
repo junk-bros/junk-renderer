@@ -169,7 +169,8 @@ export const doDownloadFiles = (userId: string, selectedRowKeys: string[]) => (
             message.error(res.data.message);
           } else {
             dispatch(fetchSuccess());
-            const filename = JSON.parse(res.config as string).filename;
+            console.log(res.config);
+            const filename = JSON.parse(res.config.data as string).filename;
             fileDownload(res.data, filename || "data.csv");
           }
         },

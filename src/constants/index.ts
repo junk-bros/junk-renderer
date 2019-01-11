@@ -38,8 +38,13 @@ export const FILE_COLUMNS = [
   },
 ];
 
-export const NODE_SERVER: string = "http://localhost:3001";
-export const PYTHON_SERVER: string = "http://localhost:4000";
+export const NODE_SERVER: string = "http://127.0.0.1:3001";
+export const PYTHON_SERVER: string = "http://127.0.0.1:4000";
+
+// export const NODE_SERVER: string =
+//   "http://ec2-52-69-234-9.ap-northeast-1.compute.amazonaws.com:3001";
+// export const PYTHON_SERVER: string =
+//   "http://ec2-52-69-234-9.ap-northeast-1.compute.amazonaws.com:4000";
 
 export const FAKE_FILES_DATA = [
   {

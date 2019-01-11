@@ -9,6 +9,4 @@ export const register = (data: RegData) => {
   return axios.post(`${NODE_SERVER}/users`, data);
 };
 
-export const getFiles = (userId: string) => {
-  return axios.get(`${PYTHON_SERVER}/file&userId=${userId}`);
-};
+
