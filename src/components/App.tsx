@@ -4,6 +4,7 @@ import React from "react";
 
 import Home from "../containers/HomeContainer";
 import Overview from "../components/Overview";
+import Visualization from "../components/Visualization";
 import { TABS } from "../constants/index";
 import UserDropDown from "../containers/UserDropDownContainer";
 
@@ -100,6 +101,9 @@ function getTab(nowTab: number) {
       break;
     case 1:
       return <Overview />;
+      break;
+    case 2:
+      return <Visualization />;
       break;
     default:
       return <Home />;

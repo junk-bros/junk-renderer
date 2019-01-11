@@ -5,7 +5,7 @@ interface OverviewProps {}
 
 class Overview extends React.Component<OverviewProps, object> {
   render() {
-    return 1;
+    return <div />;
   }
 }
 

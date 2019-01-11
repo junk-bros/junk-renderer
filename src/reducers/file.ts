@@ -1,7 +1,7 @@
 import { FAKE_FILES_DATA } from "../constants";
 
 const initialState = {
-  files: FAKE_FILES_DATA,
+  files: [],
   selectedFile: "",
   deleteLoading: false,
   downloadLoading: false,

@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Table, Select } from "antd";
+import { Button, Table, Select, Modal } from "antd";
 
 import UploadFile from "./UploadFile";
 import { FILE_COLUMNS } from "../constants";
 
 const Option = Select.Option;
+const confirm = Modal.confirm;
 
 interface HomeProps {
   userId: string;
@@ -76,6 +77,23 @@ class Home extends React.Component<HomeProps, object> {
     }, 1000);
   };
 
+  showDeleteConfirm = (
+    handleDelete: (userId: string, selectedRowKeys: string[]) => void,
+    userId: string,
+    selectedRowKeys: string[],
+  ) => {
+    confirm({
+      title: "请确认是否要删除所勾选的文件？",
+      content: "删除操作不可撤销",
+      okText: "删除",
+      okType: "danger",
+      cancelText: "取消",
+      onOk() {
+        handleDelete(userId, selectedRowKeys);
+      }
+    });
+  };
+
   render() {
     const {
       files,
@@ -112,7 +130,9 @@ class Home extends React.Component<HomeProps, object> {
             </DownloadButton>
             <Button
               type="danger"
-              onClick={() => handleDelete(userId, selectedRowKeys)}
+              onClick={() =>
+                this.showDeleteConfirm(handleDelete, userId, selectedRowKeys)
+              }
               disabled={!hasSelected}
               loading={deleteLoading}
             >
